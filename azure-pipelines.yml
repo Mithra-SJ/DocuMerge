@@ -6,7 +6,8 @@
 trigger:
 - main
 
-pool:DocuMergePool
+pool:
+  Name: DocuMergePool
 
 steps:
 - task: Maven@3
