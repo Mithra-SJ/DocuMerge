@@ -6,9 +6,10 @@
     <title>Collaborative Document Editor</title>
     <script>
         async function register() {
+            console.log("Register button clicked");
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
-            const response = await fetch('/auth/register', {
+            const response = await fetch('http://localhost:8080/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -24,7 +25,7 @@
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-            const response = await fetch('/auth/login', {
+            const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -123,11 +124,12 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
+
             <tbody id="collaboratorTableBody"></tbody>
         </table>
     </div>

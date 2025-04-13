@@ -10,12 +10,12 @@ public class Collaborator {
     private Long id;
 
     private String email;
-    private String documentId;
+    private Long documentId;
     private String role;
 
     public Collaborator() {}
 
-    public Collaborator(String email, String documentId, String role) {
+    public Collaborator(String email, Long documentId, String role) {
         this.email = email;
         this.documentId = documentId;
         this.role = role;
@@ -29,7 +29,7 @@ public class Collaborator {
         return email;
     }
 
-    public String getDocumentId() {
+    public Long getDocumentId() {
         return documentId;
     }
 

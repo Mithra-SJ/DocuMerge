@@ -15,17 +15,17 @@ public class CollaboratorController {
     private CollaboratorService collaboratorService;
     
     @PostMapping("/add")
-    public ResponseEntity<Collaborator> addCollaborator(@RequestParam Long documentId, @RequestParam String email, @RequestParam String accessLevel) {
+    public ResponseEntity<Collaborator> addCollaborator(@PathVariable Long documentId, @RequestParam String email, @RequestParam String accessLevel) {
         return ResponseEntity.ok(collaboratorService.addCollaborator(documentId, email, accessLevel));
     }
     
     @GetMapping("/list")
-    public ResponseEntity<List<Collaborator>> getCollaborators(@RequestParam Long documentId) {
+    public ResponseEntity<List<Collaborator>> getCollaborators(@PathVariable Long documentId) {
         return ResponseEntity.ok(collaboratorService.getCollaborators(documentId));
     }
     
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeCollaborator(@RequestParam Long documentId, @RequestParam String email) {
+    public ResponseEntity<String> removeCollaborator(@PathVariable Long documentId, @RequestParam String email) {
         collaboratorService.removeCollaborator(documentId, email);
         return ResponseEntity.ok("Collaborator removed successfully");
     }

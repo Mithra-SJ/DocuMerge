@@ -22,7 +22,8 @@ public class CollaborationController {
     public ResponseEntity<String> inviteCollaborator(@RequestParam String email,
                                                      @RequestParam String documentId,
                                                      @RequestParam String role) {
-        Collaborator collaborator = new Collaborator(email, documentId, role);
+        Long docId = Long.parseLong(documentId);
+        Collaborator collaborator = new Collaborator(email, docId, role);
         collaboratorRepository.save(collaborator);
         emailService.sendInvitationEmail(email, documentId, role);
         return ResponseEntity.ok("Invitation sent to " + email);
@@ -30,12 +31,14 @@ public class CollaborationController {
 
     @GetMapping("/list/{documentId}")
     public ResponseEntity<List<Collaborator>> getCollaborators(@PathVariable String documentId) {
-        return ResponseEntity.ok(collaboratorRepository.findByDocumentId(documentId));
+        Long docId = Long.parseLong(documentId);
+        return ResponseEntity.ok(collaboratorRepository.findByDocumentId(docId));
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeCollaborator(@RequestParam String email, @RequestParam String documentId) {
-        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, documentId);
+    public ResponseEntity<String> removeCollaborator(@RequestParam String email, @PathVariable String documentId) {
+        Long docId = Long.parseLong(documentId);
+        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, docId);
         if (collaborator != null) {
             collaboratorRepository.delete(collaborator);
             return ResponseEntity.ok("Collaborator removed");
@@ -45,7 +48,8 @@ public class CollaborationController {
 
     @GetMapping("/access/{documentId}/{email}")
     public ResponseEntity<String> checkAccess(@PathVariable String documentId, @PathVariable String email) {
-        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, documentId);
+        Long docId = Long.parseLong(documentId);
+        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, docId);
         if (collaborator != null) {
             return ResponseEntity.ok(collaborator.getRole());
         }
@@ -53,8 +57,9 @@ public class CollaborationController {
     }
 
     @PutMapping("/update-role")
-    public ResponseEntity<String> updateRole(@RequestParam String email, @RequestParam String documentId, @RequestParam String role) {
-        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, documentId);
+    public ResponseEntity<String> updateRole(@RequestParam String email, @PathVariable String documentId, @RequestParam String role) {
+        Long docId = Long.parseLong(documentId);
+        Collaborator collaborator = collaboratorRepository.findByEmailAndDocumentId(email, docId);
         if (collaborator != null) {
             collaborator.setRole(role);
             collaboratorRepository.save(collaborator);

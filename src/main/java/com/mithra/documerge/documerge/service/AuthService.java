@@ -2,7 +2,7 @@ package com.mithra.documerge.documerge.service;
 
 import com.mithra.documerge.documerge.model.User;
 import com.mithra.documerge.documerge.repository.UserRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +12,11 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
-
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = null;
-    }
-
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(PasswordEncoder passwordEncoder) {
-        this.userRepository = null;
+    @Autowired
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
